@@ -1,4 +1,4 @@
-package com.web.service.implementation;
+package com.web.service;
 
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;

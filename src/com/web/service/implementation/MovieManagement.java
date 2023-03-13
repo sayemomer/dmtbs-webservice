@@ -3,6 +3,8 @@ package com.web.service.implementation;
 //import DataModel.EventModel;
 //import Logger.Logger;
 
+import com.web.service.WebInterface;
+
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 
@@ -17,15 +19,27 @@ public class MovieManagement  implements WebInterface {
     public static final int Atwater_Server_Port = 8888;
     public static final int Verdun_Server_Port = 7777;
     public static final int Outramont_Server_Port = 6666;
-    public static final String MOVIE_SERVER_ATWATER = "ATW";
-    public static final String MOVIE_SERVER_VERDUN = "VER";
-    public static final String MOVIE_SERVER_OUTRAMONT = "OUT";
+    public static final String MOVIE_SERVER_ATWATER = "Atwater";
+    public static final String MOVIE_SERVER_VERDUN = "Verdun";
+    public static final String MOVIE_SERVER_OUTRAMONT = "Outramont";
 
     public MovieManagement(String serverID, String serverName){
         super();
         this.serverID = serverID;
         this.serverName = serverName;
     }
+
+    private static int getServerPort(String branchAcronym) {
+        if (branchAcronym.equalsIgnoreCase("ATW")) {
+            return Atwater_Server_Port;
+        } else if (branchAcronym.equalsIgnoreCase("VER")) {
+            return Verdun_Server_Port;
+        } else if (branchAcronym.equalsIgnoreCase("OUT")) {
+            return Outramont_Server_Port;
+        }
+        return 1;
+    }
+
 
     @Override
     public String addEvent(String eventID, String eventType, int bookingCapacity){
