@@ -9,21 +9,21 @@ public interface WebInterface {
     /**
      * Only manager
      */
-    public String addEvent(String eventID, String eventType, int bookingCapacity);
+    public String addMovie(String movieID, String movieType, int bookingCapacity);
 
-    public String removeEvent(String eventID, String eventType);
+    public String removeMovie(String movieID, String movieType);
 
-    public String listEventAvailability(String eventType);
+    public String listMovieAvailability(String movieType);
 
     /**
      * Both manager and Customer
      */
-    public String bookEvent(String customerID, String eventID, String eventType);
+    public String bookMovie(String customerID, String movieID, String movieType);
 
     public String getBookingSchedule(String customerID);
 
-    public String cancelEvent(String customerID, String eventID, String eventType);
+    public String cancelMovie(String customerID, String movieID, String movieType);
 
-    public String swapEvent(String customerID, String newEventID, String newEventType, String oldEventID, String oldEventType);
+    public String swapMovie(String customerID, String newMovieID, String newMovieType, String oldMovieID, String oldMovieType);
 
 }

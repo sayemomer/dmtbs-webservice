@@ -11,14 +11,20 @@ import java.util.Scanner;
 
 
 public class Client {
-
     public static final int CUSTOMER_BOOK_MOVIE = 1;
+    public static final int CUSTOMER_GET_BOOKING_SCHEDULE = 2;
+    public static final int CUSTOMER_CANCEL_MOVIE = 3;
+    public static final int CUSTOMER_SWAP_MOVIE = 4;
+    public static final int CUSTOMER_LOGOUT = 5;
 
-
-
-    public static final int MANAGER_ADD_MOVIE =1 ;
-
-
+    public static final int ADMIN_ADD_MOVIE =1 ;
+    public static final int ADMIN_REMOVE_MOVIE = 2;
+    public static final int ADMIN_LIST_MOVIE_AVAILABILITY = 3;
+    public static final int ADMIN_BOOK_MOVIE = 4;
+    public static final int ADMIN_GET_BOOKING_SCHEDULE = 5;
+    public static final int ADMIN_CANCEL_EVENT = 6;
+    public static final int ADMIN_SWAP_EVENT = 7;
+    public static final int ADMIN_LOGOUT = 8;
 
     public static final int SERVER_ATWATER = 2964;
     public static final int SERVER_VERDUN = 2965;
@@ -204,49 +210,49 @@ public class Client {
                 movieType = promptForMovieType();
                 movieID = promptForMovieID();
                 //Logger.clientLog(customerID, " attempting to bookEvent");
-                serverResponse = obj.bookEvent(customerID, movieID, movieType);
+                serverResponse = obj.bookMovie(customerID, movieID, movieType);
                 System.out.println(serverResponse);
                 //Logger.clientLog(customerID, " bookEvent", " eventID: " + eventID + " eventType: " + eventType + " ", serverResponse);
                 break;
-//            case CUSTOMER_GET_BOOKING_SCHEDULE:
-//                Logger.clientLog(customerID, " attempting to getBookingSchedule");
-//                serverResponse = obj.getBookingSchedule(customerID);
-//                System.out.println(serverResponse);
-//                Logger.clientLog(customerID, " bookEvent", " null ", serverResponse);
-//                break;
-//            case CUSTOMER_CANCEL_EVENT:
-//                eventType = promptForEventType();
-//                eventID = promptForEventID();
-//                Logger.clientLog(customerID, " attempting to cancelEvent");
-//                serverResponse = obj.cancelEvent(customerID, eventID, eventType);
-//                System.out.println(serverResponse);
-//                Logger.clientLog(customerID, " bookEvent", " eventID: " + eventID + " eventType: " + eventType + " ", serverResponse);
-//                break;
-//            case CUSTOMER_SWAP_EVENT:
-//                System.out.println("Please Enter the OLD event to be replaced");
-//                eventType = promptForEventType();
-//                eventID = promptForEventID();
-//                System.out.println("Please Enter the NEW event to be replaced");
-//                String newEventType = promptForEventType();
-//                String newEventID = promptForEventID();
-//                Logger.clientLog(customerID, " attempting to swapEvent");
-//                serverResponse = obj.swapEvent(customerID, newEventID, newEventType, eventID, eventType);
-//                System.out.println(serverResponse);
-//                Logger.clientLog(customerID, " swapEvent", " oldEventID: " + eventID + " oldEventType: " + eventType + " newEventID: " + newEventID + " newEventType: " + newEventType + " ", serverResponse);
-//                break;
-//            case CUSTOMER_LOGOUT:
-//                repeat = false;
-//                Logger.clientLog(customerID, " attempting to Logout");
-//                init();
-//                break;
+            case CUSTOMER_GET_BOOKING_SCHEDULE:
+               // Logger.clientLog(customerID, " attempting to getBookingSchedule");
+                serverResponse = obj.getBookingSchedule(customerID);
+                System.out.println(serverResponse);
+                //Logger.clientLog(customerID, " bookEvent", " null ", serverResponse);
+                break;
+            case CUSTOMER_CANCEL_MOVIE:
+                movieType = promptForMovieType();
+                movieID = promptForMovieID();
+                //Logger.clientLog(customerID, " attempting to cancelEvent");
+                serverResponse = obj.cancelMovie(customerID, movieID, movieType);
+                System.out.println(serverResponse);
+                //Logger.clientLog(customerID, " bookEvent", " eventID: " + eventID + " eventType: " + eventType + " ", serverResponse);
+                break;
+            case CUSTOMER_SWAP_MOVIE:
+                System.out.println("Please Enter the OLD movie to be replaced");
+                movieType = promptForMovieType();
+                movieID = promptForMovieID();
+                System.out.println("Please Enter the NEW movie to be replaced");
+                String newMovieType = promptForMovieType();
+                String newMovieID = promptForMovieID();
+                //Logger.clientLog(customerID, " attempting to swapEvent");
+                serverResponse = obj.swapMovie(customerID, newMovieID, newMovieType, movieID, movieType);
+                System.out.println(serverResponse);
+                //Logger.clientLog(customerID, " swapEvent", " oldEventID: " + eventID + " oldEventType: " + eventType + " newEventID: " + newEventID + " newEventType: " + newEventType + " ", serverResponse);
+                break;
+            case CUSTOMER_LOGOUT:
+                repeat = false;
+                //Logger.clientLog(customerID, " attempting to Logout");
+                init();
+                break;
         }
         if (repeat) {
             customer(customerID);
         }
     }
 
-    private static void admin(String eventManagerID) throws Exception {
-        String serverID = getServerID(eventManagerID);
+    private static void admin(String movieAdminID) throws Exception {
+        String serverID = getServerID(movieAdminID);
         if (serverID.equals("1")) {
             init();
         }
@@ -259,76 +265,76 @@ public class Client {
         int capacity;
         int menuSelection = input.nextInt();
         switch (menuSelection) {
-            case MANAGER_ADD_MOVIE:
+            case ADMIN_ADD_MOVIE:
                 movieType = promptForMovieType();
                 movieID = promptForMovieID();
                 capacity = promptForCapacity();
                // Logger.clientLog(eventManagerID, " attempting to addEvent");
-                serverResponse = obj.addEvent(movieID, movieType, capacity);
+                serverResponse = obj.addMovie(movieID, movieType, capacity);
                 System.out.println(serverResponse);
                 //Logger.clientLog(eventManagerID, " addEvent", " eventID: " + eventID + " eventType: " + eventType + " eventCapacity: " + capacity + " ", serverResponse);
                 break;
-//            case MANAGER_REMOVE_EVENT:
-//                eventType = promptForEventType();
-//                eventID = promptForEventID();
-//                Logger.clientLog(eventManagerID, " attempting to removeEvent");
-//                serverResponse = obj.removeEvent(eventID, eventType);
-//                System.out.println(serverResponse);
-//                Logger.clientLog(eventManagerID, " removeEvent", " eventID: " + eventID + " eventType: " + eventType + " ", serverResponse);
-//                break;
-//            case MANAGER_LIST_EVENT_AVAILABILITY:
-//                eventType = promptForEventType();
-//                Logger.clientLog(eventManagerID, " attempting to listEventAvailability");
-//                serverResponse = obj.listEventAvailability(eventType);
-//                System.out.println(serverResponse);
-//                Logger.clientLog(eventManagerID, " listEventAvailability", " eventType: " + eventType + " ", serverResponse);
-//                break;
-//            case MANAGER_BOOK_EVENT:
-//                customerID = askForCustomerIDFromManager(eventManagerID.substring(0, 3));
-//                eventType = promptForEventType();
-//                eventID = promptForEventID();
-//                Logger.clientLog(eventManagerID, " attempting to bookEvent");
-//                serverResponse = obj.bookEvent(customerID, eventID, eventType);
-//                System.out.println(serverResponse);
-//                Logger.clientLog(eventManagerID, " bookEvent", " customerID: " + customerID + " eventID: " + eventID + " eventType: " + eventType + " ", serverResponse);
-//                break;
-//            case MANAGER_GET_BOOKING_SCHEDULE:
-//                customerID = askForCustomerIDFromManager(eventManagerID.substring(0, 3));
-//                Logger.clientLog(eventManagerID, " attempting to getBookingSchedule");
-//                serverResponse = obj.getBookingSchedule(customerID);
-//                System.out.println(serverResponse);
-//                Logger.clientLog(eventManagerID, " getBookingSchedule", " customerID: " + customerID + " ", serverResponse);
-//                break;
-//            case MANAGER_CANCEL_EVENT:
-//                customerID = askForCustomerIDFromManager(eventManagerID.substring(0, 3));
-//                eventType = promptForEventType();
-//                eventID = promptForEventID();
-//                Logger.clientLog(eventManagerID, " attempting to cancelEvent");
-//                serverResponse = obj.cancelEvent(customerID, eventID, eventType);
-//                System.out.println(serverResponse);
-//                Logger.clientLog(eventManagerID, " cancelEvent", " customerID: " + customerID + " eventID: " + eventID + " eventType: " + eventType + " ", serverResponse);
-//                break;
-//            case MANAGER_SWAP_EVENT:
-//                customerID = askForCustomerIDFromManager(eventManagerID.substring(0, 3));
-//                System.out.println("Please Enter the OLD event to be swapped");
-//                eventType = promptForEventType();
-//                eventID = promptForEventID();
-//                System.out.println("Please Enter the NEW event to be swapped");
-//                String newEventType = promptForEventType();
-//                String newEventID = promptForEventID();
-//                Logger.clientLog(eventManagerID, " attempting to swapEvent");
-//                serverResponse = obj.swapEvent(customerID, newEventID, newEventType, eventID, eventType);
-//                System.out.println(serverResponse);
-//                Logger.clientLog(eventManagerID, " swapEvent", " customerID: " + customerID + " oldEventID: " + eventID + " oldEventType: " + eventType + " newEventID: " + newEventID + " newEventType: " + newEventType + " ", serverResponse);
-//                break;
-//            case MANAGER_LOGOUT:
-//                repeat = false;
-//                Logger.clientLog(eventManagerID, "attempting to Logout");
-//                init();
-//                break;
+            case ADMIN_REMOVE_MOVIE:
+                movieType = promptForMovieType();
+                movieID = promptForMovieID();
+                //Logger.clientLog(eventManagerID, " attempting to removeEvent");
+                serverResponse = obj.removeMovie(movieID, movieType);
+                System.out.println(serverResponse);
+                //Logger.clientLog(eventManagerID, " removeEvent", " eventID: " + eventID + " eventType: " + eventType + " ", serverResponse);
+                break;
+            case ADMIN_LIST_MOVIE_AVAILABILITY:
+                movieType = promptForMovieType();
+                //Logger.clientLog(eventManagerID, " attempting to listEventAvailability");
+                serverResponse = obj.listMovieAvailability(movieType);
+                System.out.println(serverResponse);
+                //Logger.clientLog(eventManagerID, " listEventAvailability", " eventType: " + eventType + " ", serverResponse);
+                break;
+            case ADMIN_BOOK_MOVIE:
+                customerID = askForCustomerIDFromManager(movieAdminID.substring(0, 3));
+                movieType = promptForMovieType();
+                movieID = promptForMovieID();
+                //Logger.clientLog(eventManagerID, " attempting to bookEvent");
+                serverResponse = obj.bookMovie(customerID, movieID, movieType);
+                System.out.println(serverResponse);
+                //Logger.clientLog(eventManagerID, " bookEvent", " customerID: " + customerID + " eventID: " + eventID + " eventType: " + eventType + " ", serverResponse);
+                break;
+            case ADMIN_GET_BOOKING_SCHEDULE:
+                customerID = askForCustomerIDFromManager(movieAdminID.substring(0, 3));
+                //Logger.clientLog(eventManagerID, " attempting to getBookingSchedule");
+                serverResponse = obj.getBookingSchedule(customerID);
+                System.out.println(serverResponse);
+                //Logger.clientLog(eventManagerID, " getBookingSchedule", " customerID: " + customerID + " ", serverResponse);
+                break;
+            case ADMIN_CANCEL_EVENT:
+                customerID = askForCustomerIDFromManager(movieAdminID.substring(0, 3));
+                movieType = promptForMovieType();
+                movieID = promptForMovieID();
+                //Logger.clientLog(eventManagerID, " attempting to cancelEvent");
+                serverResponse = obj.cancelMovie(customerID, movieID, movieType);
+                System.out.println(serverResponse);
+                //Logger.clientLog(eventManagerID, " cancelEvent", " customerID: " + customerID + " eventID: " + eventID + " eventType: " + eventType + " ", serverResponse);
+                break;
+            case ADMIN_SWAP_EVENT:
+                customerID = askForCustomerIDFromManager(movieAdminID.substring(0, 3));
+                System.out.println("Please Enter the OLD movie to be swapped");
+                movieType = promptForMovieType();
+                movieID = promptForMovieID();
+                System.out.println("Please Enter the NEW movie to be swapped");
+                String newMovieType = promptForMovieType();
+                String newMovieID = promptForMovieID();
+                //Logger.clientLog(eventManagerID, " attempting to swapEvent");
+                serverResponse = obj.swapMovie(customerID, newMovieID, newMovieType, movieID, movieType);
+                System.out.println(serverResponse);
+                //Logger.clientLog(eventManagerID, " swapEvent", " customerID: " + customerID + " oldEventID: " + eventID + " oldEventType: " + eventType + " newEventID: " + newEventID + " newEventType: " + newEventType + " ", serverResponse);
+                break;
+            case ADMIN_LOGOUT:
+                repeat = false;
+                //Logger.clientLog(eventManagerID, "attempting to Logout");
+                init();
+                break;
         }
         if (repeat) {
-            admin(eventManagerID);
+            admin(movieAdminID);
         }
     }
 
