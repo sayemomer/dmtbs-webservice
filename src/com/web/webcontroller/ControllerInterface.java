@@ -1,11 +1,11 @@
-package com.web.service;
+package com.web.webcontroller;
 
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 
 @WebService
 @SOAPBinding(style = SOAPBinding.Style.RPC)
-public interface WebInterface {
+public interface ControllerInterface {
     /**
      * Only manager
      */

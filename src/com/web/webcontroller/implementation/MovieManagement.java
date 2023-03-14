@@ -1,11 +1,11 @@
-package com.web.service.implementation;
+package com.web.webcontroller.implementation;
 
 //import DataModel.EventModel;
 //import Logger.Logger;
 
-import DataModel.ClientModel;
-import DataModel.MovieModel;
-import com.web.service.WebInterface;
+import Model.ClientModel;
+import Model.MovieModel;
+import com.web.webcontroller.ControllerInterface;
 
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
@@ -23,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @WebService(endpointInterface = "com.web.service.WebInterface")
 
 @SOAPBinding(style = SOAPBinding.Style.RPC)
-public class MovieManagement  implements WebInterface {
+public class MovieManagement  implements ControllerInterface {
 
     private String serverID;
     private String serverName;

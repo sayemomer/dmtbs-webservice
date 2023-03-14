@@ -1,6 +1,6 @@
 package main;
 
-import com.web.service.implementation.MovieManagement;
+import com.web.webcontroller.implementation.MovieManagement;
 
 import javax.xml.ws.Endpoint;
 import java.util.concurrent.ExecutorService;

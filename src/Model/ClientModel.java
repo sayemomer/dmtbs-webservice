@@ -1,4 +1,4 @@
-package DataModel;
+package Model;
 
 public class ClientModel {
     public static final String CLIENT_TYPE_ADMIN = "MOVIE_ADMIN";

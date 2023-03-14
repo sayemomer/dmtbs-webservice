@@ -1,8 +1,8 @@
-package DataModel;
+package Model;
 
 import java.util.List;
 
-import static com.web.service.implementation.MovieManagement.*;
+import static com.web.webcontroller.implementation.MovieManagement.*;
 
 
 public class MovieModel {

@@ -1,8 +1,8 @@
 package com.web.client;
 
 //import Logger.Logger;
-import DataModel.MovieModel;
-import com.web.service.WebInterface;
+import Model.MovieModel;
+import com.web.webcontroller.ControllerInterface;
 
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
@@ -38,7 +38,7 @@ public class Client {
     public static Service atwaterService;
     public static Service verdunService;
     public static Service outramontService;
-    private static WebInterface obj;
+    private static ControllerInterface obj;
 
     public static void main(String[] args) throws Exception {
         URL atwaterURL = new URL("http://localhost:8080/atwater?wsdl");
@@ -167,13 +167,13 @@ public class Client {
     private static String getServerID(String userID) {
         String branchAcronym = userID.substring(0, 3);
         if (branchAcronym.equalsIgnoreCase("ATW")) {
-            obj = atwaterService.getPort(WebInterface.class);
+            obj = atwaterService.getPort(ControllerInterface.class);
             return branchAcronym;
         } else if (branchAcronym.equalsIgnoreCase("VER")) {
-            obj = verdunService.getPort(WebInterface.class);
+            obj = verdunService.getPort(ControllerInterface.class);
             return branchAcronym;
         } else if (branchAcronym.equalsIgnoreCase("OUT")) {
-            obj = outramontService.getPort(WebInterface.class);
+            obj = outramontService.getPort(ControllerInterface.class);
             return branchAcronym;
         }
         return "1";
