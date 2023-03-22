@@ -6,18 +6,14 @@ import javax.jws.soap.SOAPBinding;
 @WebService
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 public interface ControllerInterface {
-    /**
-     * Only manager
-     */
     public String addMovie(String movieID, String movieType, int bookingCapacity);
 
     public String removeMovie(String movieID, String movieType);
 
     public String listMovieAvailability(String movieType);
 
-    /**
-     * Both manager and Customer
-     */
+
+
     public String bookMovie(String customerID, String movieID, String movieType);
 
     public String getBookingSchedule(String customerID);

@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import static com.web.webcontroller.implementation.MovieManagement.*;
 
@@ -38,11 +39,12 @@ public class MovieModel {
         this.movieTimeSlot = detectMovieTimeSlot(movieID);
         this.movieServer = detectMovieServer(movieID);
         this.movieDate = detectMovieDate(movieID);
+        registeredClients = new ArrayList<>();
 
     }
 
     public static String detectMovieServer(String movieID){
-        if (movieID.substring(0, 3).equalsIgnoreCase("AWT")) {
+        if (movieID.substring(0, 3).equalsIgnoreCase("ATW")) {
             return MOVIE_SERVER_ATWATER;
         } else if (movieID.substring(0, 3).equalsIgnoreCase("VER")) {
             return MOVIE_SERVER_VERDUN;
@@ -62,7 +64,7 @@ public class MovieModel {
     }
 
     public static String detectMovieDate(String movieID) {
-        //TODO : check why she used 20
+
         return movieID.substring(4, 6) + "/" + movieID.substring(6, 8) + "/20" + movieID.substring(8, 10);
     }
 

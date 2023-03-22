@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-@WebService(endpointInterface = "com.web.service.WebInterface")
+@WebService(endpointInterface = "com.web.webcontroller.ControllerInterface")
 
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 public class MovieManagement  implements ControllerInterface {
@@ -44,6 +44,12 @@ public class MovieManagement  implements ControllerInterface {
         super();
         this.serverID = serverID;
         this.serverName = serverName;
+        allMovies = new ConcurrentHashMap<>();
+        allMovies.put(MovieModel.AVATAR, new ConcurrentHashMap<>());
+        allMovies.put(MovieModel.AVENGER, new ConcurrentHashMap<>());
+        allMovies.put(MovieModel.TITANIC, new ConcurrentHashMap<>());
+        clientEvents = new ConcurrentHashMap<>();
+        serverClients = new ConcurrentHashMap<>();
     }
 
     private static int getServerPort(String branchAcronym) {
@@ -61,10 +67,10 @@ public class MovieManagement  implements ControllerInterface {
     public String addMovie(String movieID, String movieType, int bookingCapacity) {
         String response;
         if (isEventOfThisServer(movieID)) {
-            if (eventExists(movieType, movieID)) {
+            if (showExists(movieType, movieID)) {
                 if (allMovies.get(movieType).get(movieID).getMovieCapacity() <= bookingCapacity) {
                     allMovies.get(movieType).get(movieID).setMovieCapacity(bookingCapacity);
-                    response = "Success: Event " + movieID + " Capacity increased to " + bookingCapacity;
+                    response = "Success: Show " + movieID + " Capacity increased to " + bookingCapacity;
 //                    try {
 //                        //Logger.serverLog(serverID, "null", " CORBA addEvent ", " eventID: " + eventID + " eventType: " + eventType + " bookingCapacity " + bookingCapacity + " ", response);
 //                    } catch (IOException e) {
@@ -72,7 +78,7 @@ public class MovieManagement  implements ControllerInterface {
 //                    }
                     return response;
                 } else {
-                    response = "Failed: Event Already Exists, Cannot Decrease Booking Capacity";
+                    response = "Failed: Show Already Exists, Cannot Decrease Booking Capacity";
 //                    try {
 //                       // Logger.serverLog(serverID, "null", " CORBA addEvent ", " eventID: " + eventID + " eventType: " + eventType + " bookingCapacity " + bookingCapacity + " ", response);
 //                    } catch (IOException e) {
@@ -85,7 +91,7 @@ public class MovieManagement  implements ControllerInterface {
                 Map<String, MovieModel> MovieHashMap = allMovies.get(movieType);
                 MovieHashMap.put(movieID, movie);
                 allMovies.put(movieType, MovieHashMap);
-                response = "Success: Event " + movieID + " added successfully";
+                response = "Success: Show " + movieID + " added successfully";
 //                try {
 //                    Logger.serverLog(serverID, "null", " CORBA addEvent ", " eventID: " + eventID + " eventType: " + eventType + " bookingCapacity " + bookingCapacity + " ", response);
 //                } catch (IOException e) {
@@ -94,7 +100,7 @@ public class MovieManagement  implements ControllerInterface {
                 return response;
             }
         } else {
-            response = "Failed: Cannot Add Event to servers other than " + serverName;
+            response = "Failed: Cannot Add Show to servers other than " + serverName;
 //            try {
 //                Logger.serverLog(serverID, "null", " CORBA addEvent ", " eventID: " + eventID + " eventType: " + eventType + " bookingCapacity " + bookingCapacity + " ", response);
 //            } catch (IOException e) {
@@ -108,7 +114,7 @@ public class MovieManagement  implements ControllerInterface {
     public String removeMovie(String movieID, String movieType) {
         String response;
         if (isEventOfThisServer(movieID)) {
-            if (eventExists(movieType, movieID)) {
+            if (showExists(movieType, movieID)) {
                 List<String> registeredClients = allMovies.get(movieType).get(movieID).getRegisteredClientIDs();
                 allMovies.get(movieType).remove(movieID);
                 addCustomersToNextSameEvent(movieID, movieType, registeredClients);
@@ -146,7 +152,7 @@ public class MovieManagement  implements ControllerInterface {
         StringBuilder builder = new StringBuilder();
         builder.append(serverName).append(" Server ").append(movieType).append(":\n");
         if (movies.size() == 0) {
-            builder.append("No Events of Type ").append(movieType).append("\n");
+            builder.append("No show of Type ").append(movieType).append("\n");
         } else {
             for (MovieModel movie :
                     movies.values()) {
@@ -663,8 +669,8 @@ public class MovieManagement  implements ControllerInterface {
         }
     }
 
-    private synchronized boolean eventExists(String eventType, String eventID) {
-        return allMovies.get(eventType).containsKey(eventID);
+    private synchronized boolean showExists(String movieType, String movieID) {
+        return allMovies.get(movieType).containsKey(movieID);
     }
 
     private synchronized boolean isEventOfThisServer(String eventID) {
@@ -753,10 +759,10 @@ public class MovieManagement  implements ControllerInterface {
     public void addNewCustomerToClients(String customerID) {
         ClientModel newCustomer = new ClientModel(customerID);
         serverClients.put(newCustomer.getClientID(), newCustomer);
-//        Map<String, List<String>> emptyEvents = new ConcurrentHashMap<>();
-//        emptyEvents.put(EventModel.CONFERENCES, new ArrayList<>());
-//        emptyEvents.put(EventModel.TRADE_SHOWS, new ArrayList<>());
-//        emptyEvents.put(EventModel.SEMINARS, new ArrayList<>());
+        Map<String, List<String>> emptyEvents = new ConcurrentHashMap<>();
+        emptyEvents.put(MovieModel.AVATAR, new ArrayList<>());
+        emptyEvents.put(MovieModel.AVENGER, new ArrayList<>());
+        emptyEvents.put(MovieModel.TITANIC, new ArrayList<>());
         clientEvents.put(newCustomer.getClientID(), new ConcurrentHashMap<>());
     }
 }
