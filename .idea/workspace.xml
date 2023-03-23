@@ -5,14 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5b8b844c-ae94-427e-bffd-645953222ac2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/web/helper/Helper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/web/staticType/Types.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/MovieModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/MovieModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/web/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/web/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/web/webcontroller/ControllerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/web/webcontroller/ControllerInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/web/webcontroller/implementation/MovieManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/web/webcontroller/implementation/MovieManagement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
